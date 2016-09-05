@@ -6,8 +6,29 @@ import java.lang.reflect.Array;
 
 public class compareHomes {
     
+    static class Property extends compareHomes {
     
-    
+       String houseName;
+       double bidPrice;
+       double holdPeriod;
+       double exitPrice;
+       double investmentReturn;
+       
+       public Property(String propertyName, double propertyBidPrice, double propertyHoldPeriod, double propertyExitPrice) {
+            houseName = propertyName;
+            bidPrice = propertyBidPrice;
+            holdPeriod = propertyHoldPeriod;
+            exitPrice = propertyExitPrice;
+            investmentReturn = (1.0*Math.round((100*(100*((Math.pow((exitPrice/bidPrice), (1/holdPeriod)))-1))))/100);
+       }
+    }
+        
+    public static void showDetails(String houseName, double bidPrice, double holdPeriod, double exitPrice, double investmentReturn) {
+           
+          System.out.println(houseName + " can be bought for " + bidPrice + " and held for " + holdPeriod + " years, to be sold at " + exitPrice + ".");
+          System.out.println("Expected Return = " + investmentReturn + "%.");
+    }
+          
     public static void main(String[] args) {
     
         String fileName = "C:\\Users\\kaust\\introcs\\compareHomes\\houseValues.txt";
@@ -29,12 +50,8 @@ public class compareHomes {
             System.out.println("Error reading file " + fileName + " .");
         }    
             
-            
-        String[] houseName = new String[lineCount];
-        double[] bidPrice = new double[lineCount];
-        double[] holdPeriod = new double[lineCount];
-        double[] exitPrice = new double[lineCount];
-        double investmentReturn[] = new double[lineCount];
+        
+        List<Property> propertyList = new ArrayList<Property>();
         int i = 0;
         
         try {
@@ -43,13 +60,7 @@ public class compareHomes {
         
             while((line = bufferedReader.readLine()) != null) {
                 String columns[] = line.split(" ");
-                houseName[i] = columns[0];
-                bidPrice[i] = Double.parseDouble(columns[1]);
-                holdPeriod[i] = Double.parseDouble(columns[2]);
-                exitPrice[i] = Double.parseDouble(columns[3]);
-                investmentReturn[i] = (1.0*Math.round((100*(100*((Math.pow((exitPrice[i]/bidPrice[i]), (1/holdPeriod[i])))-1))))/100);
-                System.out.println(houseName[i] + " can be bought for " + bidPrice[i] + " and held for " + holdPeriod[i] + " years, to be sold at " + exitPrice[i] + ".");
-                System.out.println("Expected Return = " + investmentReturn[i] + "%.");
+                propertyList.add(new Property(columns[0], Double.parseDouble(columns[1]), Double.parseDouble(columns[2]), Double.parseDouble(columns[3])));
                 i++;
             }
         }
@@ -64,8 +75,8 @@ public class compareHomes {
         String maxHouse = houseName[0];
         int n;
         for (n = 1; n < investmentReturn.length; n++) {
-            if (Array.getDouble(investmentReturn, n) > max) {
-                max = Array.getDouble(investmentReturn, n);
+            if (investmentReturn[n] > max) {
+                max = investmentReturn[n];
                 maxHouse = houseName[n];
             }
         }
