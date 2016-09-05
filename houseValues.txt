@@ -1,0 +1,3 @@
+HouseA 100 5 120
+HouseB 80 4 100
+HouseC 110 6 140
