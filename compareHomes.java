@@ -23,12 +23,6 @@ public class compareHomes {
        }
     }
         
-    public static void showDetails(String houseName, double bidPrice, double holdPeriod, double exitPrice, double investmentReturn) {
-           
-          System.out.println(houseName + " can be bought for " + bidPrice + " and held for " + holdPeriod + " years, to be sold at " + exitPrice + ".");
-          System.out.println("Expected Return = " + investmentReturn + "%.");
-    }
-          
     public static void main(String[] args) {
     
         String fileName = "C:\\Users\\kaust\\introcs\\compareHomes\\houseValues.txt";
@@ -71,13 +65,13 @@ public class compareHomes {
             System.out.println("Error reading file " + fileName + " .");
         }
         
-        double max = investmentReturn[0];
-        String maxHouse = houseName[0];
+        double max = propertyList.get(0).investmentReturn;
+        String maxHouse = propertyList.get(0).houseName;
         int n;
-        for (n = 1; n < investmentReturn.length; n++) {
-            if (investmentReturn[n] > max) {
-                max = investmentReturn[n];
-                maxHouse = houseName[n];
+        for (n = 1; n < lineCount; n++) {
+            if (propertyList.get(n).investmentReturn > max) {
+                max = propertyList.get(n).investmentReturn;
+                maxHouse = propertyList.get(n).houseName;
             }
         }
          
